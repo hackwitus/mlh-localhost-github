@@ -3,7 +3,8 @@ const NodeGeocoder = require('node-geocoder');
 
 var options = {
   provider: 'google',
-  httpAdapter: 'https'
+  httpAdapter: 'https',
+  apiKey: process.env.GOOGLE_API_KEY
 };
 
 var geocoder = NodeGeocoder(options);
@@ -15,7 +16,6 @@ async function getLocations(addresses) {
       return !error;
     })
     .map(({ error, value: [result, ...results] }) => {
-      console.log(result);
       return {
         lat: result.latitude,
         lng: result.longitude
