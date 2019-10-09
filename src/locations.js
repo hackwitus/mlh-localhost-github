@@ -1,10 +1,9 @@
-const fs = require("fs");
-const NodeGeocoder = require("node-geocoder");
+const fs = require('fs');
+const NodeGeocoder = require('node-geocoder');
 
 var options = {
-  provider: "google",
-  httpAdapter: "https",
-  apiKey: process.env.GOOGLE_API_KEY,
+  provider: 'google',
+  httpAdapter: 'https'
 };
 
 var geocoder = NodeGeocoder(options);
@@ -12,11 +11,16 @@ var geocoder = NodeGeocoder(options);
 async function getLocations(addresses) {
   const locations = await geocoder
     .batchGeocode(addresses)
-    .filter(({ error }) => !error)
-    .map(({ error, value: [result, ...results] }) => ({
-      lat: result.latitude,
-      lng: result.longitude
-    }));
+    .filter(({ error }) => {
+      return !error;
+    })
+    .map(({ error, value: [result, ...results] }) => {
+      console.log(result);
+      return {
+        lat: result.latitude,
+        lng: result.longitude
+      };
+    });
   return locations;
 }
 
